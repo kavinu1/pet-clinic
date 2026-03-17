@@ -9,7 +9,7 @@ const Contact = () => {
     firstName: "",
     lastName: "",
     email: "",
-    service: "Wellness Exam",
+    service: "",
     message: "",
   });
 
@@ -48,7 +48,7 @@ const Contact = () => {
               </div>
               <div>
                 <h4>Location</h4>
-                <p>Arukwatta Animal Clinic, Padukka Rd, Padukka</p>
+                <p>Animal Clinic, Homagama, Sri Lanka</p>
               </div>
             </div>
             <div className="info-item">
@@ -57,7 +57,7 @@ const Contact = () => {
               </div>
               <div>
                 <h4>Phone</h4>
-                <p>+1 (555) 123-4567</p>
+                <p>+94 (**) *** ****</p>
               </div>
             </div>
             <div className="info-item">
@@ -111,7 +111,7 @@ const Contact = () => {
                   id="firstName"
                   name="firstName"
                   type="text"
-                  placeholder="John"
+                  placeholder="First Name"
                   autoComplete="given-name"
                   value={form.firstName}
                   onChange={(e) =>
@@ -126,7 +126,7 @@ const Contact = () => {
                   id="lastName"
                   name="lastName"
                   type="text"
-                  placeholder="Doe"
+                  placeholder="Last Name"
                   autoComplete="family-name"
                   value={form.lastName}
                   onChange={(e) =>
@@ -142,7 +142,7 @@ const Contact = () => {
                 id="email"
                 name="email"
                 type="email"
-                placeholder="john@example.com"
+                placeholder="Enter your email"
                 autoComplete="email"
                 value={form.email}
                 onChange={(e) =>
@@ -160,12 +160,16 @@ const Contact = () => {
                 onChange={(e) =>
                   setForm((prev) => ({ ...prev, service: e.target.value }))
                 }
+                required
               >
-                <option>Wellness Exam</option>
-                <option>Vaccination</option>
-                <option>Dental Care</option>
-                <option>Surgical Services</option>
-                <option>Other / Question</option>
+                <option value="" disabled>
+                  Select a service
+                </option>
+                <option value="Wellness Exam">Wellness Exam</option>
+                <option value="Vaccination">Vaccination</option>
+                <option value="Dental Care">Dental Care</option>
+                <option value="Surgical Services">Surgical Services</option>
+                <option value="Other / Question">Other / Question</option>
               </select>
             </div>
             <div className="form-group">

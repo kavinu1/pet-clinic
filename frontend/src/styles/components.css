@@ -24,15 +24,15 @@
 }
 
 .btn-primary {
-  background-color: var(--primary);
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
   color: white;
-  box-shadow: 0 4px 14px rgba(255, 107, 107, 0.4);
+  box-shadow: 0 4px 14px rgba(0, 102, 255, 0.4);
 }
 
 .btn-primary:hover {
-  background-color: var(--primary-hover);
+  background: linear-gradient(135deg, var(--secondary), var(--primary-hover));
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+  box-shadow: 0 6px 20px rgba(0, 102, 255, 0.6);
   color: white;
 }
 
@@ -93,7 +93,7 @@ textarea {
 input:focus, select:focus, textarea:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+  box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.2);
 }
 
 .form-status {
@@ -133,8 +133,8 @@ input:focus, select:focus, textarea:focus {
 
 .service-card:hover {
   transform: translateY(-12px) scale(1.02);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.08), 0 0 40px rgba(78, 205, 196, 0.15);
-  border-color: rgba(78, 205, 196, 0.3);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08), 0 0 40px rgba(0, 191, 255, 0.15);
+  border-color: rgba(0, 191, 255, 0.3);
 }
 
 .service-card:hover::before {
@@ -155,7 +155,7 @@ input:focus, select:focus, textarea:focus {
 .service-card:hover .service-icon {
   transform: scale(1.15) rotate(-5deg);
   background: linear-gradient(135deg, var(--light), #fff);
-  box-shadow: 0 10px 20px rgba(255, 107, 107, 0.15);
+  box-shadow: 0 10px 20px rgba(0, 102, 255, 0.15);
 }
 
 .service-card h3 {

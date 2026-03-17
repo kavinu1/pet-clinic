@@ -33,7 +33,10 @@
 }
 
 .logo-icon {
-  color: var(--primary);
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .nav-links {
@@ -222,7 +225,10 @@
 }
 
 .section-title span {
-  color: var(--primary);
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .section-subtitle {
@@ -238,8 +244,8 @@
   min-height: 100vh;
   display: flex;
   align-items: center;
-  background: radial-gradient(circle at top right, rgba(255, 230, 109, 0.1), transparent 40%),
-              radial-gradient(circle at bottom left, rgba(78, 205, 196, 0.1), transparent 40%);
+  background: radial-gradient(circle at top right, rgba(230, 242, 255, 0.1), transparent 40%),
+              radial-gradient(circle at bottom left, rgba(0, 191, 255, 0.1), transparent 40%);
 }
 
 .hero-container {
@@ -269,9 +275,12 @@
 }
 
 .highlight {
-  color: var(--primary);
   position: relative;
   display: inline-block;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .highlight::after {
@@ -281,9 +290,10 @@
   height: 12px;
   bottom: 8px;
   left: 0;
-  background-color: var(--accent);
+  background: linear-gradient(90deg, var(--accent), var(--secondary));
   z-index: -1;
   border-radius: 4px;
+  opacity: 0.5;
 }
 
 .hero-subtitle {
