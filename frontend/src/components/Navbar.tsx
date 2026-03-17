@@ -1,10 +1,17 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { PawPrint } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+
+import { useAuth } from '../auth/useAuth';
 
 const Navbar = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { user, logout } = useAuth();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const firstMobileLinkRef = useRef<HTMLAnchorElement | null>(null);
+  const onHome = location.pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,11 +23,15 @@ const Navbar = () => {
 
   const navLinks = useMemo(
     () => [
-      { href: '#services', label: 'Services' },
-      { href: '#about', label: 'About' },
-      { href: '#contact', label: 'Contact' },
+      ...(onHome
+        ? [
+            { href: '#services', label: 'Services' },
+            { href: '#about', label: 'About' },
+            { href: '#contact', label: 'Contact' },
+          ]
+        : []),
     ],
-    []
+    [onHome]
   );
 
   useEffect(() => {
@@ -48,19 +59,46 @@ const Navbar = () => {
 
   const closeMenu = () => setMenuOpen(false);
   const toggleMenu = () => setMenuOpen((open) => !open);
+  const onLogout = () => {
+    logout();
+    closeMenu();
+    navigate('/', { replace: true });
+  };
 
   return (
     <nav className={`navbar ${scrolled ? 'scrolled glass' : ''}`} aria-label="Primary">
       <div className="container nav-container">
-        <a href="#top" className="logo">
-          <span className="logo-icon" style={{ display: 'flex', alignItems: 'center' }}><PawPrint size={24} /></span> Paws & Care
-        </a>
+        {onHome ? (
+          <a href="#top" className="logo">
+            <span className="logo-icon" style={{ display: 'flex', alignItems: 'center' }}>
+              <PawPrint size={24} />
+            </span>{' '}
+            Paws & Care
+          </a>
+        ) : (
+          <Link to="/" className="logo">
+            <span className="logo-icon" style={{ display: 'flex', alignItems: 'center' }}>
+              <PawPrint size={24} />
+            </span>{' '}
+            Paws & Care
+          </Link>
+        )}
         <ul className="nav-links">
           {navLinks.map((link) => (
             <li key={link.href}>
               <a href={link.href}>{link.label}</a>
             </li>
           ))}
+          {user ? (
+            <li>
+              <Link to="/dashboard">Pet Records</Link>
+            </li>
+          ) : null}
+          {user?.role === 'staff' ? (
+            <li>
+              <Link to="/staff/pets/new">Add Patient</Link>
+            </li>
+          ) : null}
         </ul>
         <button
           type="button"
@@ -72,7 +110,15 @@ const Navbar = () => {
         >
           <span className="nav-toggle-icon" aria-hidden="true" />
         </button>
-        <a href="#contact" className="btn btn-primary nav-cta">Book Now</a>
+        {user ? (
+          <button type="button" className="btn btn-primary nav-cta" onClick={onLogout}>
+            Logout
+          </button>
+        ) : (
+          <Link to="/login" className="btn btn-primary nav-cta">
+            Login
+          </Link>
+        )}
       </div>
 
       <div
@@ -106,10 +152,34 @@ const Navbar = () => {
               </a>
             </li>
           ))}
+          {user ? (
+            <li>
+              <Link
+                ref={navLinks.length === 0 ? firstMobileLinkRef : undefined}
+                to="/dashboard"
+                onClick={closeMenu}
+              >
+                Pet Records
+              </Link>
+            </li>
+          ) : null}
+          {user?.role === 'staff' ? (
+            <li>
+              <Link to="/staff/pets/new" onClick={closeMenu}>
+                Add Patient
+              </Link>
+            </li>
+          ) : null}
         </ul>
-        <a href="#contact" className="btn btn-primary btn-full" onClick={closeMenu}>
-          Book Now
-        </a>
+        {user ? (
+          <button type="button" className="btn btn-primary btn-full" onClick={onLogout}>
+            Logout
+          </button>
+        ) : (
+          <Link to="/login" className="btn btn-primary btn-full" onClick={closeMenu}>
+            Login
+          </Link>
+        )}
       </div>
     </nav>
   );

@@ -1,0 +1,31 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isStaff() {
+      return signedIn() && request.auth.token.role == 'staff';
+    }
+
+    function isClient() {
+      return signedIn() && request.auth.token.role == 'client';
+    }
+
+    match /users/{userId} {
+      // Keep user profiles private by default.
+      allow read: if isStaff() || (signedIn() && request.auth.uid == userId);
+      allow write: if isStaff() || (signedIn() && request.auth.uid == userId);
+    }
+
+    match /pets/{petId} {
+      // Staff can read/write everything.
+      allow read, write: if isStaff();
+
+      // Clients can only read pets they own.
+      allow read: if isClient() && resource.data.ownerId == request.auth.uid;
+    }
+  }
+}
+

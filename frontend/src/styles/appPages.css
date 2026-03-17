@@ -1,0 +1,119 @@
+.page {
+  min-height: 100vh;
+  background: radial-gradient(1200px 700px at 10% 0%, rgba(124, 58, 237, 0.10), transparent 60%),
+    radial-gradient(900px 500px at 90% 10%, rgba(14, 165, 233, 0.10), transparent 60%),
+    var(--bg, #0b1220);
+}
+
+.page-main {
+  padding: 6rem 0 3rem;
+}
+
+.page-title {
+  margin: 0 0 1rem;
+  font-size: 2rem;
+  line-height: 1.2;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 16px;
+  padding: 1.25rem;
+  backdrop-filter: blur(10px);
+}
+
+.card-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+}
+
+.form {
+  display: grid;
+  gap: 1rem;
+}
+
+.form-inline {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  align-items: end;
+}
+
+.field {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.field > span {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(0, 0, 0, 0.25);
+  color: rgba(255, 255, 255, 0.95);
+  outline: none;
+}
+
+.field textarea {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.9rem;
+}
+
+.alert {
+  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+}
+
+.alert-error {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.muted {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+  padding: 0.75rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.section-title {
+  margin: 1.25rem 0 0.5rem;
+  font-size: 1.1rem;
+}
+
