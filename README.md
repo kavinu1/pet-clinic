@@ -74,7 +74,6 @@ npm run bootstrap:staff -- --name "Admin" --email admin@example.com --password "
 The frontend talks to the backend through a same-origin `/api` prefix by default.
 
 - Dev (`npm run dev`): Vite proxies `/api/*` → `http://localhost:4000/*`.
-- Docker: Nginx in the frontend container proxies `/api/*` → the `backend` service.
 
 To point at a different backend (e.g. a hosted API), set `VITE_API_URL` at build time (it can be absolute like `https://api.example.com`).
 
@@ -84,19 +83,6 @@ Run:
 cd frontend
 npm install
 npm run dev
-```
-
-## Docker (optional)
-
-This repo's `docker-compose.yml` publishes:
-
-- Frontend: `http://localhost:3000`
-- Backend API: `http://localhost:4000`
-
-Run:
-
-```bash
-docker compose up --build
 ```
 
 ## API endpoints
