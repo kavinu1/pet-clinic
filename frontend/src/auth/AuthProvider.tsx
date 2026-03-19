@@ -1,9 +1,22 @@
 import { useEffect, useMemo, useState } from 'react';
+import axios from 'axios';
 
 import { api, setAuthToken } from '../api/api';
 import type { AuthedUser, UserRole } from './authTypes';
 import { AuthContext, type AuthContextValue, type AuthState } from './authContext';
 import { readStoredAuth, writeStoredAuth } from './authStorage';
+
+function toAuthError(err: unknown, fallbackMessage: string) {
+  if (axios.isAxiosError(err)) {
+    const data = err.response?.data as { error?: unknown } | undefined;
+    if (typeof data?.error === 'string' && data.error.trim()) return new Error(data.error);
+    if (err.code === 'ERR_NETWORK') {
+      const base = api.defaults.baseURL ? ` (${api.defaults.baseURL})` : '';
+      return new Error(`Cannot reach the API${base}. Is the backend running?`);
+    }
+  }
+  return err instanceof Error ? err : new Error(fallbackMessage);
+}
 
 export default function AuthProvider({ children }: { children: React.ReactNode }) {
   const stored = readStoredAuth();
@@ -19,16 +32,24 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
 
   const value = useMemo<AuthContextValue>(() => {
     const login = async (email: string, password: string) => {
-      const resp = await api.post('/login', { email, password });
-      const idToken = resp.data?.idToken as string;
-      const user = resp.data?.user as AuthedUser;
-      if (!idToken || !user?.uid) throw new Error('Login failed');
-      writeStoredAuth({ idToken, user });
-      setState({ idToken, user, loading: false });
+      try {
+        const resp = await api.post('/login', { email, password });
+        const idToken = resp.data?.idToken as string;
+        const user = resp.data?.user as AuthedUser;
+        if (!idToken || !user?.uid) throw new Error('Login failed');
+        writeStoredAuth({ idToken, user });
+        setState({ idToken, user, loading: false });
+      } catch (err) {
+        throw toAuthError(err, 'Login failed');
+      }
     };
 
     const register = async (payload: { name: string; email: string; password: string; role?: UserRole }) => {
-      await api.post('/register', payload);
+      try {
+        await api.post('/register', payload);
+      } catch (err) {
+        throw toAuthError(err, 'Registration failed');
+      }
     };
 
     const logout = () => {
@@ -41,4 +62,3 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
-
