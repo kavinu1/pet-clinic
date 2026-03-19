@@ -77,6 +77,11 @@ The frontend talks to the backend through a same-origin `/api` prefix by default
 
 To point at a different backend (e.g. a hosted API), set `VITE_API_URL` at build time (it can be absolute like `https://api.example.com`).
 
+If the UI shows “Cannot reach the API (…)”, double-check that:
+
+- `VITE_API_URL` points at a live backend (not a removed/stale Railway URL).
+- The backend allows your frontend origin via CORS (see `CORS_ORIGIN` in `backend/src/app.js`).
+
 Run:
 
 ```bash

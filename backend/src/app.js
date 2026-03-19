@@ -13,7 +13,11 @@ const app = express();
 
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : true,
+    origin: process.env.CORS_ORIGIN
+      ? process.env.CORS_ORIGIN.split(',')
+          .map((v) => v.trim())
+          .filter(Boolean)
+      : true,
     credentials: true,
   })
 );
@@ -31,4 +35,3 @@ app.use(notFoundHandler);
 app.use(errorHandler);
 
 module.exports = app;
-
