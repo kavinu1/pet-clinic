@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: ./docker/Dockerfile
+    ports:
+      - "4000:4000"
+    env_file:
+      - ./backend/.env
+    # Restart the service on failure
+    restart: always
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ./docker/Dockerfile
+    ports:
+      - "8080:80"
+    # Ensure backend starts before frontend
+    depends_on:
+      - backend
+    restart: always
