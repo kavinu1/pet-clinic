@@ -1,105 +1,126 @@
-# Pet Clinic (Firebase + Express + React)
+# 🧩 Pet Clinic – Modern Full-Stack Management
 
-## Folder structure
+A premium, role-based pet clinic management system built with **React (+ Vite)**, **Express**, and **Firebase**. This application offers a seamless experience for both pet owners and clinic staff, featuring a vibrant, responsive UI with modern glassmorphic aesthetics.
 
-- `backend/` — Node.js (Express) API using Firebase Admin SDK
-- `frontend/` — React (Vite) app (login/register + client/staff dashboards)
-- `firebase/` — Example Firestore security rules
+---
 
-## Firestore collections
+## 🚀 Key Highlights
 
-### `users/{uid}`
+- **✨ Modern UI/UX**: Vibrant blue theme, glassmorphism, smooth animations, and responsive layouts.
+- **🔐 Role-Based Access Control**: Separate workflows for **Clients** (pet owners) and **Staff** (administrators).
+- **📋 Pet Management**: Track medical records, vaccination history, and pet details in real-time.
+- **📍 Interactive Clinic Info**: Integrated Google Maps for clinic location and routine service details.
+- **⚡ Blazing Fast**: Powered by Vite for the frontend and a lightweight Express backend.
 
-```json
-{
-  "uid": "string",
-  "name": "string",
-  "email": "string",
-  "role": "client | staff",
-  "createdAt": "timestamp",
-  "updatedAt": "timestamp"
-}
-```
+---
 
-### `pets/{petId}`
+## 🛠️ Tech Stack
 
-```json
-{
-  "petId": "string",
-  "name": "string",
-  "nameLower": "string",
-  "species": "string",
-  "breed": "string",
-  "age": "number | null",
-  "ownerId": "string (user uid)",
-  "ownerName": "string",
-  "ownerNameLower": "string",
-  "vaccinationRecords": "array",
-  "medicalNotes": "string",
-  "createdAt": "timestamp",
-  "updatedAt": "timestamp"
-}
-```
+### Frontend
+- **Framework**: [React](https://reactjs.org/) (Vite)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Styling**: Vanilla CSS with custom design tokens (Glassmorphism, CSS Variables)
 
-## Backend setup (Express + Firebase Admin)
+### Backend
+- **Platform**: [Node.js](https://nodejs.org/)
+- **Framework**: [Express](https://expressjs.com/)
+- **Database**: [Firebase Firestore](https://firebase.google.com/products/firestore)
+- **Auth**: [Firebase Authentication](https://firebase.google.com/products/auth)
+- **SDK**: [Firebase Admin SDK](https://firebase.google.com/docs/admin)
 
-1. Create a Firebase project, enable **Authentication → Email/Password**.
-2. Create a service account key JSON (Firebase Console → Project settings → Service accounts).
-3. Configure env vars:
-   - Edit `backend/.env`
-   - Set `FIREBASE_PROJECT_ID`
-   - Set `FIREBASE_WEB_API_KEY` (Firebase Console → Project settings → General → Web API Key)
-   - Provide credentials via either:
-     - `FIREBASE_SERVICE_ACCOUNT_JSON` (single-line full service account JSON, including `private_key` and `client_email`), or
-     - `FIREBASE_SERVICE_ACCOUNT_FILE=./serviceAccountKey.json`, or
-     - `GOOGLE_APPLICATION_CREDENTIALS=/absolute/path/to/serviceAccountKey.json`
+---
 
-Run:
+## 📂 Project Structure
 
-```bash
-cd backend
-npm install
-npm run start
-```
+- `frontend/` — React application featuring login/register flows and dashboards.
+- `backend/` — Node.js API with Firebase integration and server-side logic.
+- `firebase/` — Firestore security rules and configuration samples.
 
-Bootstrap the first staff user (recommended):
+---
 
-```bash
-cd backend
-npm run bootstrap:staff -- --name "Admin" --email admin@example.com --password "ChangeMe123!"
-```
+## ⚙️ Backend Setup (Express + Firebase Admin)
 
-## Frontend setup (React)
+1. **Firebase Project**: Create a project in the [Firebase Console](https://console.firebase.google.com/).
+2. **Auth & Database**: Enable **Authentication** (Email/Password) and **Cloud Firestore**.
+3. **Service Account**: Generate a key JSON (Project settings → Service accounts) and save it.
+4. **Environment Variables**:
+   - Create `backend/.env` based on the following template:
+     ```env
+     FIREBASE_PROJECT_ID=your-project-id
+     FIREBASE_WEB_API_KEY=your-web-api-key
+     # Provide credentials via one of:
+     FIREBASE_SERVICE_ACCOUNT_JSON={"your": "full_json"}
+     # OR FIREBASE_SERVICE_ACCOUNT_FILE=./serviceAccountKey.json
+     ```
 
-The frontend talks to the backend through a same-origin `/api` prefix by default.
+5. **Run the Backend**:
+   ```bash
+   cd backend
+   npm install
+   npm start
+   ```
 
-- Dev (`npm run dev`): Vite proxies `/api/*` → `http://localhost:4000/*`.
+> [!TIP]
+> Bootstrap your first staff user using:
+> `npm run bootstrap:staff -- --name "Admin" --email admin@example.com --password "SecurePass123!"`
 
-To point at a different backend (e.g. a hosted API), set `VITE_API_URL` at build time (it can be absolute like `https://api.example.com`).
+---
 
-If the UI shows “Cannot reach the API (…)”, double-check that:
+## 💻 Frontend Setup (React + Vite)
 
-- `VITE_API_URL` points at a live backend (not a removed/stale Railway URL).
-- The backend allows your frontend origin via CORS (see `CORS_ORIGIN` in `backend/src/app.js`).
+The frontend communicates with the backend via the `/api` proxy configured in `vite.config.ts`.
 
-Run:
+1. **Install Dependencies**:
+   ```bash
+   cd frontend
+   npm install
+   ```
 
-```bash
-cd frontend
-npm install
-npm run dev
-```
+2. **Environment**:
+   - (Optional) Set `VITE_API_URL` if the backend is not on `localhost:4000`.
 
-## API endpoints
+3. **Development Mode**:
+   ```bash
+   npm run dev
+   ```
 
-- `POST /register` — creates a user (clients self-register; staff requires staff auth)
-- `POST /login` — returns Firebase `idToken` + user profile (role)
-- `GET /users` — staff-only list of client users (owner selection)
-- `POST /pets` — staff-only create pet
-- `GET /pets` — role-based filtering (client: own pets; staff: all pets + optional search)
-- `GET /pets/:id` — role-based access
-- `PUT /pets/:id` — staff-only update pet
+---
 
-## Firestore security rules
+## 🐳 Docker Setup (Full Stack)
 
-Example rules are in `firebase/firestore.rules`. These assume you set a Firebase custom claim `role` (`client` or `staff`) on each user.
+For a streamlined local development experience, you can run the entire stack (Frontend + Backend) using Docker Compose.
+
+1. **Prerequisites**: Ensure you have [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/) installed.
+2. **Environment**: Ensure `backend/.env` is configured as described in the [Backend Setup](#-backend-setup-express--firebase-admin) section.
+3. **Build and Run**:
+   ```bash
+   docker-compose up --build
+   ```
+
+- **Frontend**: Accessible at `http://localhost:8080`.
+- **Backend API**: Accessible at `http://localhost:4000`.
+
+---
+
+## 📡 API Endpoints
+
+| Method | Endpoint | Access | Description |
+| :--- | :--- | :--- | :--- |
+| `POST` | `/register` | Public/Staff | Client registration or staff-only user creation. |
+| `POST` | `/login` | Public | Returns `idToken` and user role. |
+| `GET` | `/users` | Staff | List all clients (for owner selection). |
+| `POST` | `/pets` | Staff | Create a new pet record. |
+| `GET` | `/pets` | Client/Staff | Filtered: Clients see their pets; Staff see all + search. |
+| `GET` | `/pets/:id` | Client/Staff | Specific pet details with role-based access. |
+| `PUT` | `/pets/:id` | Staff | Update an existing pet record. |
+
+---
+
+## 🛡️ Security
+
+Example Firestore security rules are located in `firebase/firestore.rules`. These rules assume users have a custom claim `role` (`client` or `staff`) set via the backend.
+
+---
+
+*Built with ❤️ for better pet care.*
