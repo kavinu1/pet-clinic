@@ -1,4 +1,8 @@
-export type VaccinationRecord = unknown;
+export type VaccinationRecord = {
+  date: string;
+  vaccine: string;
+  notes?: string;
+};
 
 export type Pet = {
   petId: string;

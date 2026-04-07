@@ -1,9 +1,12 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
+import { Search, Plus, Eye, Edit2, PawPrint, User, Info, SearchCode } from 'lucide-react';
 
 import PageShell from '../components/PageShell';
 import { api } from '../api/api';
 import type { Pet } from '../types/petTypes';
+
+import '../styles/dashboard.css';
 
 export default function StaffDashboard() {
   const [pets, setPets] = useState<Pet[]>([]);
@@ -45,52 +48,87 @@ export default function StaffDashboard() {
 
   return (
     <PageShell>
-      <>
-        <div className="page-header">
-          <h1 className="page-title">Manage Pets</h1>
-          <Link className="btn btn-primary" to="/staff/pets/new">
-            Add pet
+      <div className="dashboard-container">
+        <div className="page-header" style={{ marginBottom: '2rem' }}>
+          <h1 className="page-title gradient-text">Manage Pets</h1>
+          <Link className="btn btn-primary" style={{ gap: '8px' }} to="/staff/pets/new">
+            <Plus size={20} /> Add pet
           </Link>
         </div>
 
-        <form className="card form-inline" onSubmit={onSearch}>
-          <label className="field">
-            <span>Pet name</span>
-            <input value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Bella" />
-          </label>
-          <label className="field">
-            <span>Owner name</span>
-            <input value={ownerName} onChange={(e) => setOwnerName(e.target.value)} placeholder="e.g. Alex" />
-          </label>
-          <button className="btn btn-secondary" type="submit" disabled={loading}>
-            {loading ? 'Searching…' : 'Search'}
-          </button>
-        </form>
+        <div className="dashboard-search-container">
+          <form className="search-card form-inline" onSubmit={onSearch}>
+            <label className="field">
+              <span>Pet name</span>
+              <input 
+                value={name} 
+                onChange={(e) => setName(e.target.value)} 
+                placeholder="e.g. Bella" 
+                style={{ background: 'white' }}
+              />
+            </label>
+            <label className="field">
+              <span>Owner name</span>
+              <input 
+                value={ownerName} 
+                onChange={(e) => setOwnerName(e.target.value)} 
+                placeholder="e.g. Alex" 
+                style={{ background: 'white' }}
+              />
+            </label>
+            <button className="btn btn-secondary" type="submit" disabled={loading} style={{ gap: '8px', padding: '12px 30px' }}>
+              <Search size={18} /> {loading ? 'Searching…' : 'Search'}
+            </button>
+          </form>
+        </div>
 
-        {error ? <p className="alert alert-error">{error}</p> : null}
+        {error ? <p className="alert alert-error" style={{ marginBottom: '2rem' }}>{error}</p> : null}
+
         <div className="grid">
           {pets.map((p) => (
-            <div className="card" key={p.petId}>
-              <h2 className="card-title">{p.name}</h2>
-              <p className="muted">
-                {p.species}
-                {p.breed ? ` • ${p.breed}` : ''}
-                {typeof p.age === 'number' ? ` • ${p.age} yrs` : ''}
-              </p>
-              <p className="muted">Owner: {p.ownerName || p.ownerId}</p>
-              <div className="row">
-                <Link className="btn btn-secondary" to={`/pets/${p.petId}`}>
-                  View
+            <div className="pet-card" key={p.petId}>
+              <div className="pet-card-header">
+                <div className="pet-card-icon">
+                  <PawPrint size={24} />
+                </div>
+                <h2 className="pet-card-title">{p.name}</h2>
+              </div>
+              
+              <div className="pet-card-info">
+                <div className="info-item">
+                  <Info size={16} />
+                  <span>{p.species}{p.breed ? ` • ${p.breed}` : ''}</span>
+                </div>
+                {typeof p.age === 'number' && (
+                  <div className="info-item">
+                    <span style={{ marginLeft: '24px' }}>{p.age} years old</span>
+                  </div>
+                )}
+                <div className="info-item">
+                  <User size={16} />
+                  <span>Owner: {p.ownerName || p.ownerId}</span>
+                </div>
+              </div>
+
+              <div className="pet-card-actions">
+                <Link className="btn btn-secondary" style={{ gap: '6px', fontSize: '0.9rem', padding: '8px 16px', borderRadius: '12px' }} to={`/pets/${p.petId}`}>
+                  <Eye size={16} /> View
                 </Link>
-                <Link className="btn btn-secondary" to={`/staff/pets/${p.petId}/edit`}>
-                  Edit
+                <Link className="btn btn-secondary" style={{ gap: '6px', fontSize: '0.9rem', padding: '8px 16px', borderRadius: '12px' }} to={`/staff/pets/${p.petId}/edit`}>
+                  <Edit2 size={16} /> Edit
                 </Link>
               </div>
             </div>
           ))}
-          {pets.length === 0 && !error ? <p className="muted">No pets found.</p> : null}
         </div>
-      </>
+
+        {pets.length === 0 && !error && !loading ? (
+          <div className="empty-dashboard">
+            <SearchCode size={48} className="empty-icon" />
+            <p>No pets found matching your search criteria.</p>
+          </div>
+        ) : null}
+      </div>
     </PageShell>
   );
 }
