@@ -13,7 +13,7 @@ RUN npm install --production
 # Copy the rest of the application code
 COPY . .
 
-# Expose the port (Railway uses PORT environment variable)
+# Expose the port (Render uses PORT environment variable)
 EXPOSE 4000
 
 # Set environment variable defaults

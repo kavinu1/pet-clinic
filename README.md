@@ -103,6 +103,32 @@ For a streamlined local development experience, you can run the entire stack (Fr
 
 ---
 
+## 🌐 Deployment
+
+### Frontend — Cloudflare Pages
+
+1. Connect your repository to [Cloudflare Pages](https://pages.cloudflare.com/).
+2. Set the following build configuration:
+   - **Root directory**: `frontend`
+   - **Build command**: `npm run build`
+   - **Build output directory**: `dist`
+   - **Node.js version**: `20`
+3. Add your environment variables (e.g. `VITE_API_URL`) in the Cloudflare Pages dashboard under **Settings → Environment variables**.
+
+> [!TIP]
+> Cloudflare Pages automatically handles SPA routing — no extra redirect rules needed.
+
+### Backend — Render
+
+1. Create a new **Web Service** in [Render](https://render.com/) and connect your repository.
+2. Set the **Root directory** to `backend`.
+3. Configure the service:
+   - **Runtime**: Docker (uses the `backend/Dockerfile`)
+   - **Environment variables**: Add all keys from `backend/.env` in the Render dashboard.
+4. Render automatically injects a `PORT` environment variable; the app is pre-configured to use it.
+
+---
+
 ## 📡 API Endpoints
 
 | Method | Endpoint | Access | Description |
