@@ -171,3 +171,219 @@ img {
     transition-duration: 0.001ms !important;
   }
 }
+
+/* Pet Details Page Styles */
+.pet-details-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding-bottom: 64px;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+  margin-bottom: 8px;
+}
+
+.back-link:hover {
+  color: var(--primary);
+  transform: translateX(-4px);
+}
+
+.pet-hero-card {
+  padding: 40px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.pet-hero-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(0, 102, 255, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.pet-hero-info h1 {
+  font-size: 2.5rem;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.pet-badges {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.badge-blue {
+  background: rgba(0, 102, 255, 0.1);
+  color: var(--primary);
+}
+
+.badge-teal {
+  background: rgba(0, 191, 255, 0.1);
+  color: #008080;
+}
+
+.badge-purple {
+  background: rgba(147, 51, 234, 0.1);
+  color: #7e22ce;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.info-card {
+  padding: 32px;
+  border-radius: var(--radius-md);
+  height: 100%;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.card-header h2 {
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+.card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--light);
+  color: var(--primary);
+}
+
+.owner-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.owner-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.owner-details p {
+  margin: 0;
+}
+
+.owner-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.owner-name {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.vaccination-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.vaccination-item {
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.no-data-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-muted);
+}
+
+.no-data-state svg {
+  margin-bottom: 16px;
+  opacity: 0.4;
+}
+
+.medical-notes-content {
+  background: rgba(255, 255, 255, 0.5);
+  padding: 20px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  min-height: 120px;
+  font-family: var(--font-body);
+  white-space: pre-wrap;
+  color: var(--text-main);
+  line-height: 1.6;
+}
+
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (max-width: 768px) {
+  .pet-hero-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 32px;
+  }
+  
+  .pet-hero-info h1 {
+    font-size: 2rem;
+  }
+  
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+}

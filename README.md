@@ -123,7 +123,7 @@ For a streamlined local development experience, you can run the entire stack (Fr
 1. Create a new **Web Service** in [Render](https://render.com/) and connect your repository.
 2. Set the **Root directory** to `backend`.
 3. Configure the service:
-   - **Runtime**: Docker (uses the `backend/Dockerfile`)
+   - **Runtime**: Docker (uses the `backend/docker/Dockerfile`)
    - **Environment variables**: Add all keys from `backend/.env` in the Render dashboard.
 4. Render automatically injects a `PORT` environment variable; the app is pre-configured to use it.
 
